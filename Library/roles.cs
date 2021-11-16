@@ -21,7 +21,8 @@ namespace Library
         }
     
         public int id_role { get; set; }
-        public Nullable<short> role_value { get; set; }
+        public string role_name { get; set; }
+        public string role_short_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users> users { get; set; }

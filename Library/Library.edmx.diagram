@@ -8,19 +8,19 @@
         <EntityTypeShape EntityType="libraryModel.address" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="libraryModel.authors" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="libraryModel.bookcategories" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="libraryModel.bookcomments" Width="1.5" PointX="5.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="libraryModel.books" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="libraryModel.bookcomments" Width="1.5" PointX="5.875" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="libraryModel.borrows" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="libraryModel.roles" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="libraryModel.users" Width="1.5" PointX="3.875" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="libraryModel.id_address" ManuallyRouted="false" />
-        <AssociationConnector Association="libraryModel.id_author" ManuallyRouted="false" />
-        <AssociationConnector Association="libraryModel.id_category" ManuallyRouted="false" />
-        <AssociationConnector Association="libraryModel.id_comment_book" ManuallyRouted="false" />
-        <AssociationConnector Association="libraryModel.id_book" ManuallyRouted="false" />
         <AssociationConnector Association="libraryModel.id_user" ManuallyRouted="false" />
-        <AssociationConnector Association="libraryModel.id_role" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="libraryModel.roles" Width="1.5" PointX="6.375" PointY="8.25" />
+        <AssociationConnector Association="libraryModel.id_user_role" />
+        <EntityTypeShape EntityType="libraryModel.books" Width="1.5" PointX="3" PointY="1.75" />
+        <AssociationConnector Association="libraryModel.id_book_author" />
+        <AssociationConnector Association="libraryModel.id_book_category" />
+        <AssociationConnector Association="libraryModel.id_comment_book" />
+        <AssociationConnector Association="libraryModel.id_borrow_book" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

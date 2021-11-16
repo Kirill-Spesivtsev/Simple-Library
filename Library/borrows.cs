@@ -20,7 +20,7 @@ namespace Library
         public Nullable<System.DateTime> taken_date { get; set; }
         public Nullable<System.DateTime> return_date { get; set; }
     
-        public virtual books books { get; set; }
         public virtual users users { get; set; }
+        public virtual books books { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Library
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public books()
         {
+            this.borrowed = false;
             this.bookcomments = new HashSet<bookcomments>();
             this.borrows = new HashSet<borrows>();
         }
@@ -29,6 +30,7 @@ namespace Library
         public Nullable<sbyte> edition { get; set; }
         public Nullable<int> id_category { get; set; }
         public bool borrowed { get; set; }
+    
         public virtual authors authors { get; set; }
         public virtual bookcategories bookcategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
