@@ -17,6 +17,7 @@ namespace Library
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
+            this.bookcomments = new HashSet<bookcomments>();
             this.borrows = new HashSet<borrows>();
         }
     
@@ -28,6 +29,8 @@ namespace Library
         public Nullable<int> id_address { get; set; }
     
         public virtual address address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<bookcomments> bookcomments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<borrows> borrows { get; set; }
         public virtual roles roles { get; set; }

@@ -17,7 +17,9 @@ namespace Library
         public int id_comment { get; set; }
         public int id_book { get; set; }
         public string comment_text { get; set; }
+        public Nullable<int> id_user { get; set; }
     
         public virtual books books { get; set; }
+        public virtual users users { get; set; }
     }
 }

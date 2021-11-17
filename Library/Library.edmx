@@ -10,10 +10,10 @@
             <PropertyRef Name="id_address" />
           </Key>
           <Property Name="id_address" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="country" Type="varchar" MaxLength="20" />
-          <Property Name="region" Type="varchar" MaxLength="20" />
-          <Property Name="locality" Type="varchar" MaxLength="20" />
-          <Property Name="street" Type="varchar" MaxLength="30" />
+          <Property Name="country" Type="varchar" MaxLength="40" />
+          <Property Name="region" Type="varchar" MaxLength="40" />
+          <Property Name="locality" Type="varchar" MaxLength="50" />
+          <Property Name="street" Type="varchar" MaxLength="70" />
           <Property Name="building_number" Type="smallint" />
           <Property Name="apartment_number" Type="smallint" />
           <Property Name="zip_code" Type="char" MaxLength="8" />
@@ -23,14 +23,14 @@
             <PropertyRef Name="id_author" />
           </Key>
           <Property Name="id_author" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="author_pen_name" Type="varchar" MaxLength="30" />
+          <Property Name="author_pen_name" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="bookcategories">
           <Key>
             <PropertyRef Name="id_book_category" />
           </Key>
           <Property Name="id_book_category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="category_name" Type="varchar" MaxLength="20" />
+          <Property Name="category_name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="bookcomments">
           <Key>
@@ -39,20 +39,22 @@
           </Key>
           <Property Name="id_comment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_book" Type="int" Nullable="false" />
-          <Property Name="comment_text" Type="varchar" MaxLength="80" />
+          <Property Name="comment_text" Type="varchar" MaxLength="500" />
+          <Property Name="id_user" Type="int" />
         </EntityType>
         <EntityType Name="books">
           <Key>
             <PropertyRef Name="id_book" />
           </Key>
           <Property Name="id_book" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="45" />
+          <Property Name="title" Type="varchar" MaxLength="200" />
           <Property Name="id_author" Type="int" />
-          <Property Name="description" Type="varchar" MaxLength="120" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
           <Property Name="pagecount" Type="smallint" />
+          <Property Name="year" Type="int" />
           <Property Name="edition" Type="tinyint" />
           <Property Name="id_category" Type="int" />
-          <Property Name="borrowed" Type="bit" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="borrowed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="borrows">
           <Key>
@@ -69,17 +71,17 @@
             <PropertyRef Name="id_role" />
           </Key>
           <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role_name" Type="varchar" MaxLength="30" />
-          <Property Name="role_short_name" Type="varchar" MaxLength="10" />
+          <Property Name="role_name" Type="varchar" MaxLength="60" />
+          <Property Name="role_short_name" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="id_user" />
           </Key>
           <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="20" />
-          <Property Name="email" Type="varchar" MaxLength="20" />
-          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="username" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="70" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
           <Property Name="id_role" Type="int" />
           <Property Name="id_address" Type="int" />
         </EntityType>
@@ -145,6 +147,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="id_comment_user">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="bookcomments" Type="Self.bookcomments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="bookcomments">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="id_user_address">
           <End Role="address" Type="Self.address" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -198,6 +212,10 @@
             <End Role="books" EntitySet="books" />
             <End Role="bookcomments" EntitySet="bookcomments" />
           </AssociationSet>
+          <AssociationSet Name="id_comment_user" Association="Self.id_comment_user">
+            <End Role="users" EntitySet="users" />
+            <End Role="bookcomments" EntitySet="bookcomments" />
+          </AssociationSet>
           <AssociationSet Name="id_user_address" Association="Self.id_user_address">
             <End Role="address" EntitySet="address" />
             <End Role="users" EntitySet="users" />
@@ -216,30 +234,30 @@
             <PropertyRef Name="id_address" />
           </Key>
           <Property Name="id_address" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="region" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="locality" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="street" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="region" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="locality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="street" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="building_number" Type="Int16" />
           <Property Name="apartment_number" Type="Int16" />
           <Property Name="zip_code" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="users" Relationship="Self.id_address" FromRole="address" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.id_user_address" FromRole="address" ToRole="users" />
         </EntityType>
         <EntityType Name="authors">
           <Key>
             <PropertyRef Name="id_author" />
           </Key>
           <Property Name="id_author" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="author_pen_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="books" Relationship="libraryModel.id_book_author" FromRole="authors" ToRole="books" />
+          <Property Name="author_pen_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="books" Relationship="Self.id_book_author" FromRole="authors" ToRole="books" />
         </EntityType>
         <EntityType Name="bookcategories">
           <Key>
             <PropertyRef Name="id_book_category" />
           </Key>
           <Property Name="id_book_category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="category_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="books" Relationship="libraryModel.id_book_category" FromRole="bookcategories" ToRole="books" />
+          <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="books" Relationship="Self.id_book_category" FromRole="bookcategories" ToRole="books" />
         </EntityType>
         <EntityType Name="bookcomments">
           <Key>
@@ -248,8 +266,28 @@
           </Key>
           <Property Name="id_comment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_book" Type="Int32" Nullable="false" />
-          <Property Name="comment_text" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="books" Relationship="libraryModel.id_comment_book" FromRole="bookcomments" ToRole="books" />
+          <Property Name="comment_text" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="id_user" Type="Int32" />
+          <NavigationProperty Name="books" Relationship="Self.id_comment_book" FromRole="bookcomments" ToRole="books" />
+          <NavigationProperty Name="users" Relationship="Self.id_comment_user" FromRole="bookcomments" ToRole="users" />
+        </EntityType>
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="id_book" />
+          </Key>
+          <Property Name="id_book" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_author" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pagecount" Type="Int16" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="edition" Type="SByte" />
+          <Property Name="id_category" Type="Int32" />
+          <Property Name="borrowed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="authors" Relationship="Self.id_book_author" FromRole="books" ToRole="authors" />
+          <NavigationProperty Name="bookcategories" Relationship="Self.id_book_category" FromRole="books" ToRole="bookcategories" />
+          <NavigationProperty Name="bookcomments" Relationship="Self.id_comment_book" FromRole="books" ToRole="bookcomments" />
+          <NavigationProperty Name="borrows" Relationship="Self.id_borrow_book" FromRole="books" ToRole="borrows" />
         </EntityType>
         <EntityType Name="borrows">
           <Key>
@@ -260,24 +298,34 @@
           <Property Name="id_book" Type="Int32" />
           <Property Name="taken_date" Type="DateTime" />
           <Property Name="return_date" Type="DateTime" />
-          <NavigationProperty Name="users" Relationship="Self.id_user" FromRole="borrows" ToRole="users" />
-          <NavigationProperty Name="books" Relationship="libraryModel.id_borrow_book" FromRole="borrows" ToRole="books" />
+          <NavigationProperty Name="books" Relationship="Self.id_borrow_book" FromRole="borrows" ToRole="books" />
+          <NavigationProperty Name="users" Relationship="Self.id_borrow_user" FromRole="borrows" ToRole="users" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="role_short_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="Self.id_user_role" FromRole="roles" ToRole="users" />
         </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="id_user" />
           </Key>
           <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="id_role" Type="Int32" />
           <Property Name="id_address" Type="Int32" />
-          <NavigationProperty Name="address" Relationship="Self.id_address" FromRole="users" ToRole="address" />
-          <NavigationProperty Name="borrows" Relationship="Self.id_user" FromRole="users" ToRole="borrows" />
-          <NavigationProperty Name="roles" Relationship="libraryModel.id_user_role" FromRole="users" ToRole="roles" />
+          <NavigationProperty Name="address" Relationship="Self.id_user_address" FromRole="users" ToRole="address" />
+          <NavigationProperty Name="bookcomments" Relationship="Self.id_comment_user" FromRole="users" ToRole="bookcomments" />
+          <NavigationProperty Name="borrows" Relationship="Self.id_borrow_user" FromRole="users" ToRole="borrows" />
+          <NavigationProperty Name="roles" Relationship="Self.id_user_role" FromRole="users" ToRole="roles" />
         </EntityType>
-        <Association Name="id_address">
+        <Association Name="id_user_address">
           <End Role="address" Type="Self.address" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +337,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="id_user">
+        <Association Name="id_book_author">
+          <End Role="authors" Type="Self.authors" Multiplicity="0..1" />
+          <End Role="books" Type="Self.books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authors">
+              <PropertyRef Name="id_author" />
+            </Principal>
+            <Dependent Role="books">
+              <PropertyRef Name="id_author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_book_category">
+          <End Role="bookcategories" Type="Self.bookcategories" Multiplicity="0..1" />
+          <End Role="books" Type="Self.books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bookcategories">
+              <PropertyRef Name="id_book_category" />
+            </Principal>
+            <Dependent Role="books">
+              <PropertyRef Name="id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_comment_book">
+          <End Role="books" Type="Self.books" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="bookcomments" Type="Self.bookcomments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="id_book" />
+            </Principal>
+            <Dependent Role="bookcomments">
+              <PropertyRef Name="id_book" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_comment_user">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="bookcomments" Type="Self.bookcomments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="bookcomments">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_borrow_book">
+          <End Role="books" Type="Self.books" Multiplicity="0..1" />
+          <End Role="borrows" Type="Self.borrows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="id_book" />
+            </Principal>
+            <Dependent Role="borrows">
+              <PropertyRef Name="id_book" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_borrow_user">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="borrows" Type="Self.borrows" Multiplicity="*" />
           <ReferentialConstraint>
@@ -301,56 +411,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="libraryEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="address" EntityType="Self.address" />
-          <EntitySet Name="authors" EntityType="Self.authors" />
-          <EntitySet Name="bookcategories" EntityType="Self.bookcategories" />
-          <EntitySet Name="bookcomments" EntityType="Self.bookcomments" />
-          <EntitySet Name="borrows" EntityType="Self.borrows" />
-          <EntitySet Name="users" EntityType="Self.users" />
-          <AssociationSet Name="id_address" Association="Self.id_address">
-            <End Role="address" EntitySet="address" />
-            <End Role="users" EntitySet="users" />
-          </AssociationSet>
-          <AssociationSet Name="id_user" Association="Self.id_user">
-            <End Role="users" EntitySet="users" />
-            <End Role="borrows" EntitySet="borrows" />
-          </AssociationSet>
-          <EntitySet Name="roles" EntityType="libraryModel.roles" />
-          <AssociationSet Name="id_user_role" Association="libraryModel.id_user_role">
-            <End Role="roles" EntitySet="roles" />
-            <End Role="users" EntitySet="users" />
-          </AssociationSet>
-          <EntitySet Name="books" EntityType="libraryModel.books" />
-          <AssociationSet Name="id_book_author" Association="libraryModel.id_book_author">
-            <End Role="authors" EntitySet="authors" />
-            <End Role="books" EntitySet="books" />
-          </AssociationSet>
-          <AssociationSet Name="id_book_category" Association="libraryModel.id_book_category">
-            <End Role="bookcategories" EntitySet="bookcategories" />
-            <End Role="books" EntitySet="books" />
-          </AssociationSet>
-          <AssociationSet Name="id_comment_book" Association="libraryModel.id_comment_book">
-            <End Role="books" EntitySet="books" />
-            <End Role="bookcomments" EntitySet="bookcomments" />
-          </AssociationSet>
-          <AssociationSet Name="id_borrow_book" Association="libraryModel.id_borrow_book">
-            <End Role="books" EntitySet="books" />
-            <End Role="borrows" EntitySet="borrows" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="roles">
-          <Key>
-            <PropertyRef Name="id_role" />
-          </Key>
-          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="role_short_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="users" Relationship="libraryModel.id_user_role" FromRole="roles" ToRole="users" />
-        </EntityType>
         <Association Name="id_user_role">
-          <End Type="libraryModel.roles" Role="roles" Multiplicity="0..1" />
-          <End Type="libraryModel.users" Role="users" Multiplicity="*" />
+          <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="roles">
               <PropertyRef Name="id_role" />
@@ -360,79 +423,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="books">
-          <Key>
-            <PropertyRef Name="id_book" />
-          </Key>
-          <Property Name="id_book" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="id_author" Type="Int32" />
-          <Property Name="description" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="pagecount" Type="Int16" />
-          <Property Name="edition" Type="SByte" />
-          <Property Name="id_category" Type="Int32" />
-          <Property Name="borrowed" Type="Boolean" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
-          <NavigationProperty Name="authors" Relationship="libraryModel.id_book_author" FromRole="books" ToRole="authors" />
-          <NavigationProperty Name="bookcategories" Relationship="libraryModel.id_book_category" FromRole="books" ToRole="bookcategories" />
-          <NavigationProperty Name="bookcomments" Relationship="libraryModel.id_comment_book" FromRole="books" ToRole="bookcomments" />
-          <NavigationProperty Name="borrows" Relationship="libraryModel.id_borrow_book" FromRole="books" ToRole="borrows" />
-        </EntityType>
-        <Association Name="id_book_author">
-          <End Type="libraryModel.authors" Role="authors" Multiplicity="0..1" />
-          <End Type="libraryModel.books" Role="books" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="authors">
-              <PropertyRef Name="id_author" />
-            </Principal>
-            <Dependent Role="books">
-              <PropertyRef Name="id_author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_book_category">
-          <End Type="libraryModel.bookcategories" Role="bookcategories" Multiplicity="0..1" />
-          <End Type="libraryModel.books" Role="books" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bookcategories">
-              <PropertyRef Name="id_book_category" />
-            </Principal>
-            <Dependent Role="books">
-              <PropertyRef Name="id_category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_comment_book">
-          <End Type="libraryModel.books" Role="books" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="libraryModel.bookcomments" Role="bookcomments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="books">
-              <PropertyRef Name="id_book" />
-            </Principal>
-            <Dependent Role="bookcomments">
-              <PropertyRef Name="id_book" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_borrow_book">
-          <End Type="libraryModel.books" Role="books" Multiplicity="0..1" />
-          <End Type="libraryModel.borrows" Role="borrows" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="books">
-              <PropertyRef Name="id_book" />
-            </Principal>
-            <Dependent Role="borrows">
-              <PropertyRef Name="id_book" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+        <EntityContainer Name="libraryDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="address" EntityType="Self.address" />
+          <EntitySet Name="authors" EntityType="Self.authors" />
+          <EntitySet Name="bookcategories" EntityType="Self.bookcategories" />
+          <EntitySet Name="bookcomments" EntityType="Self.bookcomments" />
+          <EntitySet Name="books" EntityType="Self.books" />
+          <EntitySet Name="borrows" EntityType="Self.borrows" />
+          <EntitySet Name="roles" EntityType="Self.roles" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="id_user_address" Association="Self.id_user_address">
+            <End Role="address" EntitySet="address" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="id_book_author" Association="Self.id_book_author">
+            <End Role="authors" EntitySet="authors" />
+            <End Role="books" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="id_book_category" Association="Self.id_book_category">
+            <End Role="bookcategories" EntitySet="bookcategories" />
+            <End Role="books" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="id_comment_book" Association="Self.id_comment_book">
+            <End Role="books" EntitySet="books" />
+            <End Role="bookcomments" EntitySet="bookcomments" />
+          </AssociationSet>
+          <AssociationSet Name="id_comment_user" Association="Self.id_comment_user">
+            <End Role="users" EntitySet="users" />
+            <End Role="bookcomments" EntitySet="bookcomments" />
+          </AssociationSet>
+          <AssociationSet Name="id_borrow_book" Association="Self.id_borrow_book">
+            <End Role="books" EntitySet="books" />
+            <End Role="borrows" EntitySet="borrows" />
+          </AssociationSet>
+          <AssociationSet Name="id_borrow_user" Association="Self.id_borrow_user">
+            <End Role="users" EntitySet="users" />
+            <End Role="borrows" EntitySet="borrows" />
+          </AssociationSet>
+          <AssociationSet Name="id_user_role" Association="Self.id_user_role">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище libraryModelContainer" CdmEntityContainer="libraryEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище libraryModelContainer" CdmEntityContainer="libraryDB">
           <EntitySetMapping Name="address">
             <EntityTypeMapping TypeName="libraryModel.address">
               <MappingFragment StoreEntitySet="address">
@@ -469,6 +507,22 @@
                 <ScalarProperty Name="id_comment" ColumnName="id_comment" />
                 <ScalarProperty Name="id_book" ColumnName="id_book" />
                 <ScalarProperty Name="comment_text" ColumnName="comment_text" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="libraryModel.books">
+              <MappingFragment StoreEntitySet="books">
+                <ScalarProperty Name="id_book" ColumnName="id_book" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id_author" ColumnName="id_author" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="pagecount" ColumnName="pagecount" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="edition" ColumnName="edition" />
+                <ScalarProperty Name="id_category" ColumnName="id_category" />
+                <ScalarProperty Name="borrowed" ColumnName="borrowed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -483,6 +537,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="libraryModel.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="role_short_name" ColumnName="role_short_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="libraryModel.users">
               <MappingFragment StoreEntitySet="users">
@@ -492,29 +555,6 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="id_role" ColumnName="id_role" />
                 <ScalarProperty Name="id_address" ColumnName="id_address" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="libraryModel.roles">
-              <MappingFragment StoreEntitySet="roles">
-                <ScalarProperty Name="role_short_name" ColumnName="role_short_name" />
-                <ScalarProperty Name="role_name" ColumnName="role_name" />
-                <ScalarProperty Name="id_role" ColumnName="id_role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="books">
-            <EntityTypeMapping TypeName="libraryModel.books">
-              <MappingFragment StoreEntitySet="books">
-                <ScalarProperty Name="borrowed" ColumnName="borrowed" />
-                <ScalarProperty Name="id_category" ColumnName="id_category" />
-                <ScalarProperty Name="edition" ColumnName="edition" />
-                <ScalarProperty Name="pagecount" ColumnName="pagecount" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id_author" ColumnName="id_author" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="id_book" ColumnName="id_book" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
